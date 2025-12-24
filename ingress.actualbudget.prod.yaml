@@ -1,0 +1,40 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: actual-budget-ingress
+  namespace: actual-budget
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/issuer: "vault-issuer"  # Using Issuer instead of ClusterIssuer
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    avp.kubernetes.io/path: "argocd/data/argocd-vault-plugin/actual-budget"   
+    cert-manager.io/common-name: "*.diagon.ally"
+    # # HTTP backend (default)
+    # nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    # nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
+    # WebSocket support - THIS IS KEY FOR N8N
+    nginx.ingress.kubernetes.io/websocket-services: "actual-budget"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    # Additional helpful settings
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"  # Important!
+
+spec:
+  tls:
+  - hosts:
+    - <actual_budget_url>  #actual-budget-internal-url
+    secretName: diagon-ally-tls 
+  rules:
+  - host: <actual_budget_url>  #actual-budget-internal-url
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: actual-budget
+            port:
+              number: 443

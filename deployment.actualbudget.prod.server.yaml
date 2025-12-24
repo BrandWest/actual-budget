@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: actual-budget
+  name: actual-budget
+  namespace: actual-budget
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: actual-budget
+  template:
+    metadata:
+      labels:
+        service: actual-budget
+    spec:      
+      containers:
+        - image: actualbudget/actual-server:sha-f6bdc71
+          name: actual-budget
+          env:
+            - name: ACTUAL_UPLOAD_FILE_SYNC_SIZE_LIMIT_MB
+              value: "100"
+            - name: ACTUAL_UPLOAD_SYNC_ENCRYPTED_FILE_SYNC_SIZE_LIMIT_MB
+              value: "150"
+            - name: ACTUAL_ALLOWED_LOGIN_METHODS
+              value: "password, openid"
+            - name: ACTUAL_OPENID_DISCOVERY_URL
+              value: <path:argocd/data/argocd-vault-plugin/actual-budget#actual_openid_discovery_url>
+            - name: ACTUAL_OPENID_CLIENT_ID
+              value: <path:argocd/data/argocd-vault-plugin/actual-budget#oauth_client_id>
+            - name: ACTUAL_OPENID_CLIENT_SECRET
+              value: <path:argocd/data/argocd-vault-plugin/actual-budget#oauth_client_secret>
+            - name: ACTUAL_OPENID_SERVER_HOSTNAME
+              value: <path:argocd/data/argocd-vault-plugin/actual-budget#actual_openid_server_hostname>
+            - name: ACTUAL_OPENID_ENFORCE
+              value: "true" # 
+            - name: ACTUAL_TOKEN_EXPIRATION
+              value: "3600"
+          ports:
+            - containerPort: 5006
+              name: actual-budget
+              protocol: TCP
+      restartPolicy: Always
+

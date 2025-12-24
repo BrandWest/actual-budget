@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: truenas-actual-budget-pv
+spec:
+  capacity:
+    storage: 5Gi  # Adjust size as needed
+  accessModes:
+    - ReadWriteMany  # NFS supports multiple pods reading/writing
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: truenas.diagon.ally
+    path: /mnt/MainPool/k8s-storage/actual-budget  # Your NFS export path
