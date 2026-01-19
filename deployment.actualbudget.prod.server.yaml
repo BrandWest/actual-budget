@@ -26,13 +26,13 @@ spec:
             - name: ACTUAL_ALLOWED_LOGIN_METHODS
               value: "password, openid"
             - name: ACTUAL_OPENID_DISCOVERY_URL
-              value: <path:argocd/data/argocd-vault-plugin/actual-budget#actual_openid_discovery_url>
+              value: <path:secret/data/apps/actual-budget#actual_openid_discovery_url>
             - name: ACTUAL_OPENID_CLIENT_ID
-              value: <path:argocd/data/argocd-vault-plugin/actual-budget#oauth_client_id>
+              value: <path:secret/data/apps/actual-budget#oauth_client_id>
             - name: ACTUAL_OPENID_CLIENT_SECRET
-              value: <path:argocd/data/argocd-vault-plugin/actual-budget#oauth_client_secret>
+              value: <path:secret/data/apps/actual-budget#oauth_client_secret>
             - name: ACTUAL_OPENID_SERVER_HOSTNAME
-              value: <path:argocd/data/argocd-vault-plugin/actual-budget#actual_openid_server_hostname>
+              value: <path:secret/data/apps/actual-budget#actual_openid_server_hostname>
             - name: ACTUAL_OPENID_ENFORCE
               value: "true" # 
             - name: ACTUAL_TOKEN_EXPIRATION

@@ -8,7 +8,7 @@ metadata:
     cert-manager.io/issuer: "vault-issuer"  # Using Issuer instead of ClusterIssuer
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    avp.kubernetes.io/path: "argocd/data/argocd-vault-plugin/actual-budget"   
+    avp.kubernetes.io/path: "secret/data/apps/actual-budget"   
     cert-manager.io/common-name: "*.diagon.ally"
     # # HTTP backend (default)
     # nginx.ingress.kubernetes.io/proxy-body-size: "0"

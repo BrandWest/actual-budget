@@ -18,7 +18,7 @@ kind: ClusterRole
 metadata:
   name: cert-manager-actual-budget
   annotations:
-    avp.kubernetes.io/path: "argocd/data/argocd-vault-plugin/actual-budget"
+    avp.kubernetes.io/path: "secret/data/apps/actual-budget"
 rules:
 - apiGroups: [""]
   resources: ["secrets"]
